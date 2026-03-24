@@ -1,0 +1,250 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+  <h2 style="display: none;">{% block title %}Translation{% endblock title %}</h2>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js" integrity="sha384-/KNQL8Nu5gCHLqwqfQjA689Hhoqgi2S84SNUxC3roTe4EhJ9AfLkp8QiQcU8AMzI" crossorigin="anonymous"></script>
+{% endblock header %}
+
+{% block content %}
+
+  <div id="modalBackground">
+    <div id="modalContent">
+
+      <div id="modalHeader">
+        <h2 id="modalTitle">Instructions</h2>
+        <button id="closeModalBtn">&times;</button>
+      </div>
+      
+      <div id="modalBody">
+        <div class="modalBodyBox">
+          <img id="modalImg" src="https://cdn-icons-png.flaticon.com/512/2699/2699237.png">
+          <p>
+            Open the camera
+          </p>
+        </div>
+        <div class="modalBodyBox">
+          <img id="modalImg" src="https://cdn-icons-png.flaticon.com/512/5849/5849557.png">
+          <p>
+            Sign and wait for the results
+          </p>
+        </div>
+        <div class="modalBodyBox">
+          <img id="modalImg" src="https://cdn-icons-png.flaticon.com/512/12468/12468126.png">
+          <p>
+            Check the previous transliteration
+          </p>
+        </div>
+      </div>
+      
+      <div id="modalFooter">
+        <div class="modalBodyBox">
+          <img id="modalImg" src="https://cdn-icons-png.flaticon.com/512/8359/8359696.png">
+          <p id="mobile">
+            In case you want to read the instructions again, a button is located below.
+          </p>
+          <p id="desktop">
+            In case you want to read the instructions again, a button is located on the right.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button id="openModalBtn"><img src="https://cdn-icons-png.flaticon.com/512/2274/2274794.png"></button>
+
+  <div id="backgroundTranslation">
+    <picture>
+      <source media="(min-width: 769px)" srcset="https://OsieG.github.io/testFlaskGit/app/static/images/translationDesktop.jpg">
+      <img src="https://OsieG.github.io/testFlaskGit/app/static/images/translationMobile.jpg" alt="bg1">
+    </picture>
+  </div>
+
+  <button id="sidePanelHistoryBtn" onclick="openHist()"><img src="https://cdn-icons-png.flaticon.com/512/16421/16421479.png"></button>
+
+  <!-- works like a card -->
+   <!-- try to update this design in particular it looks like ass -->
+  <div id="sidePanelHistoryContent"> 
+    <div id="sidePanelHistoryHeader">
+      <button id="sidePanelHistoryCloseBtn" onclick="closeHist()">&times;</button>
+      <h2 id="sidePanelHeader">History</h2>
+    </div>
+    <div id="sPHistoryContent">
+    </div>
+  </div>
+
+
+  <div id="translationMainContent">
+    <div id="translationStatusMessage">
+      <p id="messageID">Click me to start</p>
+    </div>
+    <div id="translationVideoContainer">
+      <video id="camera" class="feed" autoplay playsinline muted></video>
+      <div id="videoLoader" class="loader" style="display: none;"></div>
+    </div>
+    <div id="translationButtonToggle">
+      <button id="translationBtn" onclick="controlFeed()"><img id="transBtnIcon" src="https://cdn-icons-png.flaticon.com/512/3004/3004613.png"></button>
+    </div>
+    <div id="translationTextResultContainer">
+      <p></p>
+      <div id="moodResult"></div>
+    </div>
+  </div>
+  
+
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    const message = document.getElementById('messageID')
+    const loading = document.getElementById('videoLoader')
+    const translationBox = document.getElementById('translationTextResultContainer')
+    const transBtnIcon = document.getElementById('transBtnIcon')
+    const transBtn = document.getElementById('translationBtn')
+
+    let translationContainer = [];
+    let isStreaming = false;
+
+    let running = false;
+    let sendInterval = null;
+    const socket = io();
+
+    const video = document.getElementById('camera');
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // let prev_word = "";
+
+    function customMessage(x) {
+      const messages = {
+        load: "Loading camera...",
+        running: "Running Camera...",
+        stop: "Camera Closed.",
+        default: "Feed interrupted."
+      };
+      message.innerHTML = messages[x] || messages.default;
+    }
+
+    function updateHistory(newWord) {
+        const historyContainer = document.getElementById("sPHistoryContent");
+        
+        // Create a new element for the history list
+        const entry = document.createElement("p");
+        entry.style.borderBottom = "1px solid #ddd";
+        entry.textContent = newWord;
+        
+        // Add it to the top of the history list
+        historyContainer.prepend(entry);
+        // prev_word = newWord;
+    }
+
+    async function startCamera() {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { width: 1280, height: 720, frameRate: { ideal: 30 } }
+      });
+      video.srcObject = stream;
+      video.style.display = "block";
+      await video.play();
+    }
+
+    function stopCamera() {
+      const stream = video.srcObject;
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        video.srcObject = null;
+        video.style.display = "none"; // Hide the element so it doesn't show a frozen frame
+      }
+    }
+
+    async function sendFrame() {
+        if (!video.videoWidth || !socket.connected) return;
+        canvas.width = 640;
+        canvas.height = 480;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const frame = canvas.toDataURL("image/jpeg", 0.5);
+        
+        // await acknowledgment before returning
+        return new Promise((resolve) => {
+            socket.emit("video_frame", { frame });
+            socket.once("ack", resolve);  // server sends ack when done
+        });
+    }
+
+    async function sendFrameLoop() {
+      while (running) {
+          await sendFrame();
+      }
+    }
+
+    async function controlFeed() {
+      const icon = document.getElementById("transBtnIcon");
+
+      if (!running) {
+        try {
+          running = true;
+
+          transBtnIcon.style.display = "none";
+          transBtn.style.display = "none";
+          loading.style.display = "block";
+          customMessage("load");
+
+          await startCamera();
+          
+          transBtnIcon.style.display = "block";
+          transBtn.style.display = "block";
+          loading.style.display = "none";
+          translationBox.style.display = "block";
+          customMessage("running");
+          sendFrameLoop();
+          icon.src = "https://cdn-icons-png.flaticon.com/512/4144/4144469.png";   // start icon
+        } catch (err){
+          running = false;
+
+          console.error("Error starting camera: ", err);
+          loading.style.display = "none";
+          translationBox.style.display = "block";
+        }
+      } else {
+        running = false;
+
+        customMessage("stop");
+        translationBox.style.display = "none";
+        stopCamera();
+        icon.src = "https://cdn-icons-png.flaticon.com/512/3004/3004613.png";   //stop icon
+      
+        // Tell server to clear buffer for this user
+        socket.emit("clear_session");
+      }
+    }
+
+    socket.on("translation", data => {
+        const resultElement = document.querySelector("#translationTextResultContainer p");
+        
+        // 1. Only trigger if the word is actually new
+        if (resultElement.textContent !== data.word) {
+            
+            // 2. Update the text
+            resultElement.textContent = `${data.word} (${(data.confidence * 100).toFixed(0)}%)`;
+
+            // 3. Trigger the animation
+            resultElement.classList.remove("new-word-blink"); // Reset if it was there
+            void resultElement.offsetWidth; // "Magic" line to force a CSS reflow
+            resultElement.classList.add("new-word-blink");
+            
+            // 4. Update your history list if you have one
+            updateHistory(data.word); 
+        }
+    });
+
+    socket.on("face", data => {
+      // you'll need an element for this in your HTML
+      const moodElement = document.querySelector("#moodResult");
+      if (moodElement) {
+          moodElement.textContent = `${data.mood} (${(data.confidence * 100).toFixed(0)}%)`;
+
+          moodElement.classList.remove("new-word-blink"); // Reset if it was there
+          void moodElement.offsetWidth; // "Magic" line to force a CSS reflow
+          moodElement.classList.add("new-word-blink");
+      }
+    });
+</script>
+{% endblock scripts %}

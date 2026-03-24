@@ -1,0 +1,748 @@
+/* Sidebar Styles */
+.sidebar {
+    height: 100%; /* Full-height */
+    width: 0; /* 0 width - starting collapsed */
+    position: fixed; /* Fixed position for overlay effect */
+    z-index: 10; /* Stay on top of the content */
+    top: 0;
+    left: 0;
+    background-color: #111; /* Black background */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+    padding-top: 60px; /* Place content 60px from the top */
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+}
+
+#menuButton {
+  padding: 10px 15px;
+}
+
+.mainHeader {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+}
+
+@media (max-width: 768px) {
+  .mainHeader {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 20px;
+  }
+}
+
+.mainLayout {
+    padding: 20px;
+    margin: 0 auto;
+}
+
+#homeContainerA {
+  font-family: 'Courier New';
+  font-size: 30px;
+}
+
+@media (max-width: 768px) {
+  #homeContainerA {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 23px;
+  }
+}
+
+#homeContainerB {
+  font-family: 'Courier New';
+  font-size: 25px;
+}
+
+@media (max-width: 768px) {
+  #homeContainerB {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 18px;
+  }
+}
+
+#aboutContainer {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 25px;
+}
+
+.loader {
+border: 16px solid #f3f3f3; /* Light grey */
+border-top: 16px solid #3498db; /* Blue */
+border-radius: 50%;
+width: 120px;
+height: 120px;
+margin: auto;
+animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.feed {
+  margin: auto;
+  width: 75%;
+}
+
+.button {
+  margin: auto;
+}
+
+
+
+body{
+  background-color: #f0f0f0;
+}
+
+
+#translationContainer {
+  background-color: #e8e8e8;
+  padding: 10px 15px;
+  margin-top: 20px;
+  margin-left: 50px;
+}
+
+#translation {
+  font-family: 'Courier New';
+  font-size: 20px;
+}
+
+#cameraMain {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+
+
+.backgroundHome {
+  position: fixed;    /* Sticks to the screen, doesn't scroll */
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;        /* Puts it BEHIND everything else */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 3. The Individual Images */
+.backgroundHome li picture {
+    position: absolute; 
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+/* --- FIX 2: TARGETING --- */
+.backgroundHome li img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block; /* Removes tiny bottom margin on images */
+    opacity: 0;
+    animation: imageAnimation 15s linear infinite; 
+}
+
+/* --- FIX 3: APPLY DELAY TO IMG, NOT LI --- */
+.backgroundHome li:nth-child(1) img { 
+    animation-delay: 0s;
+}
+.backgroundHome li:nth-child(2) img { 
+    animation-delay: 5s; 
+}
+.backgroundHome li:nth-child(3) img { 
+    animation-delay: 10s; 
+}
+
+@keyframes imageAnimation { 
+    0% { opacity: 0; animation-timing-function: ease-in; }
+    10% { opacity: 0.6; animation-timing-function: ease-out; }
+    33% { opacity: 0.6; } 
+    43% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+#backgroundAbout {
+  position: fixed;
+  inset: 0;
+  z-index: -1;        /* stays behind everything */
+  overflow: hidden;
+}
+
+#backgroundAbout picture, #backgroundAbout img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* behaves like background-size: cover */
+  opacity: 0.65;
+}
+
+#aboutCornerTitles {
+  position: fixed;
+  bottom: 50px;
+  left: 50px;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  #aboutCornerTitles {
+    bottom: 10px;  /* closer to bottom */
+    left: 15px;    /* closer to left but not hugging the screen edge */
+    font-size: 1rem;
+  }
+}
+
+#avatarImg {
+  border-radius: 25%;
+  width: 200px;
+  position: fixed;
+  bottom: 145px;
+  left: 60px;
+}
+
+@media (max-width: 768px) {
+  #avatarImg {
+    border-radius: 50%;
+    width: 90px;
+    left: 25px;
+    bottom: 85px;
+  }
+}
+
+#aboutDescription {
+  text-align: justify;
+  text-justify: inter-word;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 25px;
+}
+
+@media (max-width: 768px) {
+  #aboutDescription {
+    text-align: justify;
+    text-justify: inter-word;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+  }
+}
+
+/* Container and Reset */
+.socials {
+  list-style: none; /* Remove bullet points */
+  display: flex; /* Arrange items in a row */
+  gap: 15px; /* Space between icons */
+  padding: 0;
+  margin: 20px 0;
+}
+
+.socialLink {
+  display: flex;
+  position: relative; /* Crucial for positioning the tooltip */
+}
+
+.socialLink:hover {
+  color: #007bff; /* Hover color */
+}
+
+/* Icon Sizing (Mobile Default) */
+.socialIcon {
+  width: 28px; 
+  height: 28px;
+  display: block; /* Removes tiny gap below images */
+  transition: transform 0.2s ease; /* We will animate the size instead of color */
+}
+
+@media (min-width: 768px) {
+  .socials {
+    list-style: none; /* Remove bullet points */
+    display: flex; /* Arrange items in a row */
+    gap: 18px; /* Space between icons */
+    position: absolute;
+    bottom: 33px;
+    left: 330px;
+  }
+
+
+  .socialRow {
+    gap: 20px; /* Increase space between icons on desktop */
+  }
+
+  .socialIcon {
+    width: 50px; /* Increase icon size for desktop */
+    height: 50px;
+  }
+
+  /* Tooltip font can also be slightly larger if needed */
+  .socialLink::after {
+    font-size: 14px;
+  }
+}
+
+/* --- TOOLTIP STYLES --- */
+
+.socialLink:hover .social-icon {
+  transform: scale(1.1); /* Zooms in by 10% */
+}
+
+.socialLink::after {
+  content: attr(data-tooltip); /* Pull text from data-tooltip attribute */
+  position: absolute;
+  bottom: 100%; /* Position it above the icon */
+  left: 50%;
+  transform: translateX(-50%); /* Center the tooltip horizontally */
+  
+  /* Tooltip box styling */
+  background-color: #333;
+  color: white;
+  padding: 5px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-size: 12px;
+  
+  /* Hide by default */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+/* Tooltip Visibility on Hover/Focus */
+.socialLink:hover::after,
+.socialLink:focus::after {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+#backgroundTranslation {
+  position: fixed;
+  inset: 0;
+  z-index: -1;        /* stays behind everything */
+  overflow: hidden;
+}
+
+#backgroundTranslation picture, #backgroundTranslation img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* behaves like background-size: cover */
+  filter: blur(5px);
+  opacity: 0.9;
+}
+
+
+
+
+
+#modalBackground {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+}
+
+/* basically the modal card */
+#modalContent { 
+  background-color: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  /* Ensure content fits on smaller screens */
+  max-width: 90vw;
+  width: 450px; 
+  box-sizing: border-box;
+  position: fixed;
+  top: 50%;        /* Move down 50% of the viewport height */
+  left: 50%;       /* Move right 50% of the viewport width */
+  transform: translate(-50%, -50%); /* Shift the element back by half its own size */
+}
+
+#modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  padding-bottom: 2.5px;
+  border-bottom: 1px solid #e5e7eb;
+  margin-top: -1rem;
+}
+
+#modalTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+#modalBody {
+  /* Fixed position to cover the viewport */
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.modalBodyBox {
+  display: flex;
+  justify-content: flex-start;
+  gap: 25px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+#desktop{
+  display: none;
+}
+
+@media (min-width: 768px){
+  #desktop{
+    display: inline-block;
+  }
+  #mobile{
+    display: none;
+  }
+}
+
+#modalFooter{
+  line-height: 1.6;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* mobile edit for modal footer */
+#modalImg {
+  float: left;
+  width: 25px; 
+  height: 25px;
+  padding-top: 5px;
+}
+
+
+@media (min-width: 768px) { 
+  #modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  #modalTitle {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1f2937;
+  }
+
+  .modalBodyBox {
+    display: flex;
+    justify-content: flex-start;
+    gap: 25px;
+    align-items: center;
+    font-size: 1.2rem;
+  }
+
+  #modalImg {
+    float: left;
+    width: 35px; 
+    height: 35px;
+    padding-top: 5px;
+  }
+}
+
+#openModalBtn {
+  position: fixed;
+  display: flex;
+  height: 40px;
+  width: 40px;
+  bottom: 65px;
+  right: 18px;
+}
+
+
+#openModalBtn img{
+  display: block;
+  width: 0.8 em;
+  height: 0.8 em;
+}
+
+/* for desktop */
+@media (min-width: 768px) { 
+  #openModalBtn {
+    position: fixed;
+    display: flex;
+    height: 45px;
+    width: 45px;
+    top: 25px;
+    right: 25px;
+  }
+
+
+  #openModalBtn img{
+    display: block;
+    width: 1 em;
+    height: 1 em;
+  }
+}
+
+
+#sidePanelHistoryBtn {
+  position: fixed;
+  display: flex;
+  height: 40px;
+  width: 40px;
+  top: 85px;
+  right: 18px;
+}
+
+
+#sidePanelHistoryBtn img{
+  display: block;
+  width: 0.8 em;
+  height: 0.8 em;
+}
+
+#sidePanelHistoryBtn:hover {
+  background-color:#444;
+}
+
+/* for desktop */
+@media (min-width: 768px) { 
+  #sidePanelHistoryBtn {
+    position: fixed;
+    display: flex;
+    height: 45px;
+    width: 45px;
+    top: 85px;
+    right: 25px;
+  }
+
+
+  #sidePanelHistoryBtn img{
+    display: block;
+    width: 1 em;
+    height: 1 em;
+  }
+
+  #sidePanelHistoryBtn:hover {
+    background-color:#444;
+  }
+}
+
+#sidePanelHistoryContent {
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  height: 100%;
+  top: 0;
+  right: 0;
+  background-image: url("https://OsieG.github.io/testFlaskGit/app/static/images/historyBackground1.jpg");
+  filter: grayscale(40%);
+  opacity: 0.92;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+/* for desktop */
+@media (min-width: 768px) {
+  #sidePanelHistoryContent {
+    filter: grayscale(0%);
+  }
+}
+
+#sidePanelHistoryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px;
+  background: #262626;
+  border-bottom: 1px solid #444;
+  margin-top: -2rem;
+}
+
+#sidePanelHeader {
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  color: #000000;
+}
+
+/* for desktop */
+@media (min-width: 768px) {
+    #sidePanelHistoryHeader {
+      margin-top: -2rem;
+  }
+}
+
+#sPHistoryContent {
+  padding: 20px;
+  overflow-y: auto;
+  margin-top: 3.5rem;
+  flex: 1;                          /* fills remaining space */
+  line-height: 1.6;
+  background: #262626;
+}
+
+#sPHistoryContent p {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 0;
+  color: #000000;
+}
+
+
+#translationMainContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 62vh;
+}
+
+#translationBtn {
+  display: flex;
+  height: 50px;
+  width: 50px;
+  padding: 2px;
+  justify-content: center;
+}
+
+/* for desktop */
+@media (min-width: 768px) {
+  #translationBtn {
+    display: flex;
+    height: 70px;
+    width: 85px;
+    padding: 2px;
+    justify-content: center;
+  }
+}
+
+#transBtnIcon {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* for desktop */
+@media (min-width: 768px) {
+  #transBtnIcon {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
+#messageID {
+  font-size: 1.1em;
+  font-weight: 700;
+  font-family: 'Courier New', Courier, monospace;
+  margin: 5;
+  color: #000000;
+}
+
+#translationTextResultContainer{
+  height: 20%;
+  width: 60%;
+  display: none;
+  border: 2px solid black;
+}
+
+/* The base style for your result container */
+#translationTextResultContainer p {
+    transition: all 0.3s ease;
+}
+
+/* The animation class we will add via JS */
+.new-word-blink {
+    animation: highlight-glow 0.8s ease-out;
+}
+
+@keyframes highlight-glow {
+    0% {
+        background-color: rgba(255, 255, 0, 0); /* Transparent */
+        transform: scale(1);
+    }
+    50% {
+        background-color: rgba(255, 255, 0, 0.4); /* Soft Yellow Glow */
+        transform: scale(1.05); /* Slight "pop" in size */
+    }
+    100% {
+        background-color: rgba(255, 255, 0, 0);
+        transform: scale(1);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+.typingContainer {
+  height: 100vh;
+  /*This part is important for centering*/
+  display: grid;
+  place-items: center;
+}
+
+.typingText {
+  width: 22ch;
+  animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2em;
+}
+
+@keyframes typing {
+  from {
+    width: 0
+  }
+}
+    
+@keyframes blink {
+  50% {
+    border-color: transparent
+  }
+}

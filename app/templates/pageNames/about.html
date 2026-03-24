@@ -1,0 +1,62 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+  <h2>{% block title %}About me{% endblock title %}</h2>
+{% endblock header %}
+
+{% block content %}
+  <div id="backgroundAbout">
+    <picture>
+      <source media="(min-width: 769px)" srcset="https://OsieG.github.io/testFlaskGit/app/static/images/aboutBackgroundDesktop.jpg">
+      <img src="https://OsieG.github.io/testFlaskGit/app/static/images/aboutBackgroundMobile.jpg" alt="bg1">
+    </picture>
+  </div>
+
+  <div id="aboutMyPhoto">
+    <picture>
+      <img id="avatarImg" src="https://OsieG.github.io/testFlaskGit/app/static/images/myPhoto.jpg" alt="avatar">
+    </picture>
+  </div>
+
+  <div id="aboutContainer">
+
+    <div id="aboutDescription">
+      <p>
+        &emsp;Hi, it's me. Here are some of my socials in case you want to contact me. If you want to read my paper the link is down there somewhere. I'm still learning the ropes anyway. bye.
+      </p>
+    </div>
+    
+    <div id="socialsContainer">
+      <ul class="socials">
+        <li class="socialItem">
+          <a data-tooltip="jlgandia2@up.edu.ph" class="socialLink"><img  class="socialIcon" src="https://cdn-icons-png.flaticon.com/512/4946/4946005.png"></a> <!-- non hyperlink social; tooltip this jlgandia2@up.edu.ph -->
+        </li>
+        <li class="socialItem">
+          <a href="https://docs.google.com/viewer?url=https://OsieG.github.io/testFlaskGit/app/static/docs/CMSC190_JOLGandiaPaper.pdf" class="socialLink" data-tooltip="PDF to SP"><img class="socialIcon" src="https://cdn-icons-png.flaticon.com/512/9234/9234211.png"></a> <!--PDF paper https://docs.google.com/viewer?url=https://OsieG.github.io/testFlaskGit/app/static/docs/CMSC190_JOLGandiaPaper.pdf -->
+        </li>
+        <li class="socialItem">
+          <a href="https://github.com/OsieG" class="socialLink" data-tooltip="Github"><img class="socialIcon" src="https://cdn-icons-png.flaticon.com/512/1051/1051326.png"></a> <!--github https://github.com/OsieG -->
+        </li>
+        <li class="socialItem">
+          <a href="https://youtube.com/@zzzhandlethis?si=49udJRS664pjcBNO" class="socialLink" data-tooltip="YouTube"><img class="socialIcon" src="https://cdn-icons-png.flaticon.com/512/4494/4494467.png"></a> <!--youtube https://youtube.com/@zzzhandlethis?si=49udJRS664pjcBNO -->
+        </li>
+        <li class="socialItem">
+          <a href="https://op.gg/lol/summoners/sea/PancakeDearrr-Th201" style="opacity: 0;" class="socialLink" data-tooltip="secret"><img class="socialIcon" src="https://cdn-icons-png.flaticon.com/512/8190/8190164.png"></a> <!--trying to make this invisible -->
+        </li>
+        <li class="socialItem">
+          <a href="https://akasha.cv/profile/806624298" style="opacity: 0;" class="socialLink" data-tooltip="secret"><img class="socialIcon" src="https://cdn-icons-png.flaticon.com/512/8190/8190164.png"></a> <!--trying to make this invisible -->
+        </li>
+      </ul>
+      
+    </div>
+
+    <div id="aboutCornerTitles">
+      <h1 style="margin-bottom: -13px;">
+        <strong>Student Dev</strong>
+      </h1>
+      <p style="opacity: 0.7; font-size: 15px;">
+        part-time creator <strong style="color: lightseagreen;">|</strong> senior <strong style="color: lightseagreen;">|</strong> sleepy
+      </p>
+    </div>
+  </div>
+{% endblock content %}

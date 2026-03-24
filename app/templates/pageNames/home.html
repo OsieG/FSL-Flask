@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+  <h2>{% block title %}Home{% endblock title %}</h2>
+{% endblock header %}
+
+{% block content %}
+  <ul class="backgroundHome">
+    <li>
+      <picture>
+        <source media="(min-width: 769px)" srcset="https://OsieG.github.io/testFlaskGit/app/static/images/backgroundDesktop1.jpg">
+        <img src="https://OsieG.github.io/testFlaskGit/app/static/images/backgroundMobile.jpg" alt="bg1">
+      </picture>
+    </li>
+    <li>
+      <picture>
+        <source media="(min-width: 769px)" srcset="https://OsieG.github.io/testFlaskGit/app/static/images/backgroundDesktop2.jpg">
+        <img src="https://OsieG.github.io/testFlaskGit/app/static/images/backgroundMobile1.jpg" alt="bg2">
+      </picture>
+    </li>
+    <li>
+      <picture>
+        <source media="(min-width: 769px)" srcset="https://OsieG.github.io/testFlaskGit/app/static/images/backgroundDesktop3.jpg">
+        <img src="https://OsieG.github.io/testFlaskGit/app/static/images/backgroundMobile2.jpg" alt="bg3">
+      </picture>
+    </li>
+
+  </ul>
+  <div id="homeContainerA">
+    <p>
+      This <strong>Special Project</strong> for CMSC 190 is focused on <strong>Transliteration of Filipino Sign Langauge</strong> that is viewable online through this website.
+      The website requires access to the device's camera in order to transliterate the signer's message. This ensures that the signer can <strong>communicate</strong> their message across along with their full intent.
+    </p>
+  </div>
+  <div id="homeContainerB">
+    <p>
+      Communication is vital for social beings, as this is the basis for day-to-day activities. 
+      This not only signifies that individuals belong to a particular group but also provides social utilities that ensure the group's survival. 
+      Through communication, individuals learn to understand, respect, and empathize with one another, and being deprived of such interaction leads to a breakdown of the human experience. 
+      However, according to the Philippine Statistics Authority (2020), in 2020, there are an estimated 1,784,690 individuals who have difficulty hearing. 
+      In order for them to communicate effectively, they have learned how to use sign language from an early age. 
+      These individuals are compelled to learn FSL from specialized schools or from local deaf communities so they can achieve some semblance of a <strong>normal life</strong>.
+    </p>
+  </div>
+{% endblock content %}

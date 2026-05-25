@@ -16,7 +16,7 @@ import time
 bp = Blueprint("pageNames", __name__)
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-ACTION_PATH = os.path.join(BASE_DIR, "modelAction2.keras")
+ACTION_PATH = os.path.join(BASE_DIR, "modelAction.keras")
 FACE_PATH = os.path.join(BASE_DIR, "moodFold2.keras")
 
 actionModel = tf.keras.models.load_model(ACTION_PATH)
